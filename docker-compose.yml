@@ -1,0 +1,27 @@
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/:/app
+      - ./src/:/app/src
+    env_file:
+      - .env
+    networks:
+      - rag-bot
+
+  frontend:
+    build: ./frontend
+    depends_on:
+      - backend
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./frontend/:/app
+    networks:
+      - rag-bot
+
+networks:
+  rag-bot:
+    external: false
